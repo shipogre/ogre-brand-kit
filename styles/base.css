@@ -1,0 +1,46 @@
+/**
+ * OGRE Design System - Base Styles
+ *
+ * Optional CSS file with base styles and keyframe animations.
+ * Import this file if you need CSS-based styles in addition to Tailwind.
+ *
+ * @usage
+ * import 'ogre-brand-kit/styles.css';
+ */
+
+/* Spinner animation */
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Focus ring styles */
+:focus-visible {
+  outline: 2px solid #6C3333;
+  outline-offset: 2px;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Remove default button styles */
+button {
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+}
+
+/* Improve text rendering */
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
