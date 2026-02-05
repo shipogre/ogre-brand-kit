@@ -12,6 +12,39 @@ import {
   ProgressBar,
 } from '../src/components';
 
+function CopyableClass({ className }: { className: string }) {
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = async () => {
+    await navigator.clipboard.writeText(className);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 1500);
+  };
+
+  return (
+    <button
+      onClick={handleCopy}
+      className="px-2 py-1 text-xs font-mono text-text-secondary bg-bg-secondary hover:bg-bg-hover border border-border rounded cursor-pointer transition-colors"
+      title="Click to copy"
+    >
+      {copied ? '✓ Copied!' : className}
+    </button>
+  );
+}
+
+function ClassReference({ classes }: { classes: string[] }) {
+  return (
+    <div className="mt-4 pt-4 border-t border-border">
+      <p className="text-text-muted text-xs mb-2">CSS Classes (click to copy):</p>
+      <div className="flex flex-wrap gap-2">
+        {classes.map((cls) => (
+          <CopyableClass key={cls} className={cls} />
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export function DesignSystem() {
   const [inputValue, setInputValue] = useState('');
   const [selectValue, setSelectValue] = useState('');
@@ -67,6 +100,7 @@ export function DesignSystem() {
             <ColorSwatch name="Border Light" className="bg-border-light border border-border" textDark />
             <ColorSwatch name="Sidebar BG" className="bg-sidebar-bg border border-border" textDark />
           </div>
+          <ClassReference classes={['bg-primary', 'bg-primary-hover', 'bg-secondary', 'bg-secondary-hover', 'bg-success', 'bg-warning', 'bg-error', 'bg-info', 'bg-bg-primary', 'bg-bg-secondary', 'bg-bg-hover', 'bg-border', 'bg-border-light', 'bg-sidebar-bg']} />
         </section>
 
         {/* Buttons Section */}
@@ -106,6 +140,7 @@ export function DesignSystem() {
               </Button>
             </div>
           </Card>
+          <ClassReference classes={['.btn', '.btn-primary', '.btn-secondary', '.btn-ghost', '.btn-small', '.btn-large', '.btn-icon']} />
         </section>
 
         {/* Form Elements Section */}
@@ -180,6 +215,7 @@ export function DesignSystem() {
               />
             </div>
           </Card>
+          <ClassReference classes={['.form-group', '.form-label', '.form-input', '.form-select', '.form-textarea']} />
         </section>
 
         {/* Cards Section */}
@@ -221,6 +257,9 @@ export function DesignSystem() {
               </p>
             </Card>
           </div>
+          <div className="mt-4">
+            <ClassReference classes={['.card', '.card-header', '.card-title', '.card-footer', '.tile', '.tile-icon', '.tile-title', '.tile-description']} />
+          </div>
         </section>
 
         {/* Badges Section */}
@@ -239,6 +278,7 @@ export function DesignSystem() {
               <Badge status="pending">Pending</Badge>
             </div>
           </Card>
+          <ClassReference classes={['.status-badge', '.status-active', '.status-progress', '.status-review', '.status-completed', '.status-pending']} />
         </section>
 
         {/* Spinners Section */}
@@ -264,6 +304,7 @@ export function DesignSystem() {
               </div>
             </div>
           </Card>
+          <ClassReference classes={['.spinner', '.spinner-sm', '.spinner-lg']} />
         </section>
 
         {/* Progress Bars Section */}
@@ -297,6 +338,7 @@ export function DesignSystem() {
               </div>
             </div>
           </Card>
+          <ClassReference classes={['.progress-bar', '.progress-fill', '.progress-text']} />
         </section>
 
         {/* Stat Tiles Section */}
@@ -324,6 +366,9 @@ export function DesignSystem() {
               <div className="stat-label">Open Issues</div>
               <div className="stat-change negative">-15.3%</div>
             </div>
+          </div>
+          <div className="mt-4">
+            <ClassReference classes={['.stat-tile', '.stat-value', '.stat-label', '.stat-change', '.positive', '.negative']} />
           </div>
         </section>
 
@@ -382,6 +427,9 @@ export function DesignSystem() {
               </tbody>
             </table>
           </div>
+          <div className="mt-4">
+            <ClassReference classes={['.table-container', '.table-header', '.table-title', '.data-table']} />
+          </div>
         </section>
 
         {/* Typography Section */}
@@ -398,6 +446,7 @@ export function DesignSystem() {
               <p className="text-text-muted">Muted Text - Used for less important information</p>
             </div>
           </Card>
+          <ClassReference classes={['text-text-primary', 'text-text-secondary', 'text-text-muted']} />
         </section>
 
         {/* Shadows Section */}
@@ -418,51 +467,7 @@ export function DesignSystem() {
               <p className="text-text-muted text-sm">High elevation</p>
             </div>
           </div>
-        </section>
-
-        {/* CSS Classes Reference */}
-        <section className="mb-12">
-          <h2 className="text-2xl font-semibold text-text-primary mb-6">CSS Classes Reference</h2>
-
-          <Card>
-            <CardHeader>
-              <CardTitle>Available Utility Classes</CardTitle>
-            </CardHeader>
-            <div className="space-y-6">
-              <div>
-                <h4 className="font-medium text-text-primary mb-2">Buttons</h4>
-                <code className="text-sm bg-bg-secondary px-2 py-1 rounded">.btn .btn-primary .btn-secondary .btn-ghost .btn-small .btn-large .btn-icon</code>
-              </div>
-              <div>
-                <h4 className="font-medium text-text-primary mb-2">Forms</h4>
-                <code className="text-sm bg-bg-secondary px-2 py-1 rounded">.form-group .form-label .form-input .form-select .form-textarea</code>
-              </div>
-              <div>
-                <h4 className="font-medium text-text-primary mb-2">Cards & Tiles</h4>
-                <code className="text-sm bg-bg-secondary px-2 py-1 rounded">.card .card-header .card-title .card-footer .tile .tile-icon .tile-title .tile-description</code>
-              </div>
-              <div>
-                <h4 className="font-medium text-text-primary mb-2">Stats</h4>
-                <code className="text-sm bg-bg-secondary px-2 py-1 rounded">.stat-tile .stat-value .stat-label .stat-change .positive .negative</code>
-              </div>
-              <div>
-                <h4 className="font-medium text-text-primary mb-2">Badges</h4>
-                <code className="text-sm bg-bg-secondary px-2 py-1 rounded">.status-badge .status-active .status-progress .status-review .status-completed .status-pending</code>
-              </div>
-              <div>
-                <h4 className="font-medium text-text-primary mb-2">Tables</h4>
-                <code className="text-sm bg-bg-secondary px-2 py-1 rounded">.table-container .table-header .table-title .data-table</code>
-              </div>
-              <div>
-                <h4 className="font-medium text-text-primary mb-2">Progress</h4>
-                <code className="text-sm bg-bg-secondary px-2 py-1 rounded">.progress-bar .progress-fill .progress-text</code>
-              </div>
-              <div>
-                <h4 className="font-medium text-text-primary mb-2">Spinners</h4>
-                <code className="text-sm bg-bg-secondary px-2 py-1 rounded">.spinner .spinner-sm .spinner-lg</code>
-              </div>
-            </div>
-          </Card>
+          <ClassReference classes={['shadow-sm', 'shadow-md', 'shadow-lg']} />
         </section>
       </div>
     </div>
