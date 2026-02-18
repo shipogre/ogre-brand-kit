@@ -48,6 +48,16 @@ export const colors = {
     info: '#2563eb', // Blue-600
     infoBg: '#eff6ff',
   },
+  action: {
+    approve: '#06b6d4', // Cyan-500
+    approveBg: '#ecfeff',
+    file: '#f97316', // Orange-500
+    fileBg: '#fff7ed',
+    reject: '#ea580c', // Orange-600
+    rejectBg: '#fff7ed',
+    contact: '#14b8a6', // Teal-500
+    contactBg: '#f0fdfa',
+  },
 } as const;
 
 export const shadows = {
