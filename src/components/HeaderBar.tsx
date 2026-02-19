@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { SearchInput } from './SearchInput';
+import ogreLogo from '../../assets/ogre_with_tag.png';
 
 export interface HeaderBarProps {
     isDarkMode: boolean;
@@ -45,7 +46,7 @@ export const HeaderBar: React.FC<HeaderBarProps> = ({
                     <div className="flex items-center gap-4">
                         <Link to="/" className="block cursor-pointer transition-opacity hover:opacity-90">
                             <img
-                                src="/ogre_with_tag.png"
+                                src={ogreLogo}
                                 alt="OGRE - Ship Like A Beast"
                                 className="h-12 w-auto object-contain"
                             />

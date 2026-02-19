@@ -50,11 +50,13 @@
     "./styles.css": "./dist/styles.css",
     "./styles/theme.css": "./styles/theme.css",
     "./styles/base.css": "./styles/base.css",
-    "./styles/components.css": "./styles/components.css"
+    "./styles/components.css": "./styles/components.css",
+    "./assets/*": "./assets/*"
   },
   "files": [
     "dist",
-    "styles"
+    "styles",
+    "assets"
   ],
   "scripts": {
     "dev": "vite --mode demo",
