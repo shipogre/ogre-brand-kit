@@ -13,3 +13,4 @@ export * from './HeaderBar';
 export * from './Sidebar';
 export * from './Toggle';
 export * from './Dropdown';
+export * from './SelectableRow';
