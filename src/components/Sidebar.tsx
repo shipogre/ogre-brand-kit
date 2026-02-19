@@ -20,12 +20,11 @@ export interface BottomAction {
 export interface SidebarProps {
     activeItem?: string;
     items: NavItem[];
-    bottomAction?: BottomAction;
+    bottomActions?: BottomAction[];
+    headerContent?: React.ReactNode;
 }
 
-export const Sidebar: React.FC<SidebarProps> = ({ activeItem = 'dashboard', items, bottomAction }) => {
-    // The design shows a fixed "Rail" style sidebar, so we might remove the collapse toggle
-    // or keep it just for mobile? For now, let's match the visual which is a fixed width rail.
+export const Sidebar: React.FC<SidebarProps> = ({ activeItem = 'dashboard', items, bottomActions, headerContent }) => {
     const navigate = useNavigate();
 
     const handleItemClick = (item: NavItem) => {
@@ -37,16 +36,18 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeItem = 'dashboard', item
     };
 
     return (
-        <aside className="bg-bg-secondary/30 dark:bg-gray-950 text-white flex flex-col h-screen w-[100px] border-r border-gray-800 flex-shrink-0 sticky top-0">
+        <aside className="bg-[#1a1a2e] text-white flex flex-col h-screen w-[72px] flex-shrink-0 sticky top-0 z-[60] overflow-visible">
             {/* Sidebar Header */}
-            <div className="p-4 flex flex-col items-center justify-center border-b border-gray-800/50 min-h-[80px]">
-                <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center shadow-lg shadow-primary/20">
-                    <span className="text-white font-black text-xl">O</span>
-                </div>
+            <div className="flex flex-col items-center justify-center py-4 min-h-[64px] mb-4">
+                {headerContent ?? (
+                    <div className="w-9 h-9 bg-primary rounded-lg flex items-center justify-center">
+                        <span className="text-white font-black text-lg">O</span>
+                    </div>
+                )}
             </div>
 
             {/* Navigation Items */}
-            <nav className="flex-1 overflow-y-auto py-4 flex flex-col gap-2 px-2">
+            <nav className="flex-1 flex flex-col pt-2 gap-8">
                 {items.map((item) => {
                     const Icon = item.icon;
                     const isActive = activeItem === item.id;
@@ -56,41 +57,44 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeItem = 'dashboard', item
                             key={item.id}
                             onClick={() => handleItemClick(item)}
                             className={`
-                                w-full flex flex-col items-center justify-center py-3 px-1 rounded-xl transition-all duration-200 group relative
+                                relative w-full flex flex-col items-center justify-center py-3 px-1 transition-colors duration-150 group
                                 ${isActive
-                                    ? 'bg-primary text-white shadow-md'
-                                    : 'text-gray-400 hover:bg-gray-800/50 hover:text-white'
+                                    ? 'text-white'
+                                    : 'text-gray-500 hover:text-gray-300'
                                 }
                             `}
                         >
-                            <div className="relative mb-1">
-                                <Icon size={22} strokeWidth={isActive ? 2.5 : 2} />
-                                {item.badge !== undefined && (
-                                    <span className="absolute -top-1.5 -right-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-[9px] font-bold text-white ring-2 ring-gray-900">
-                                        {item.badge}
-                                    </span>
-                                )}
-                            </div>
-                            <span className={`text-[10px] font-bold uppercase tracking-wide ${isActive ? 'text-white' : 'text-gray-500 group-hover:text-gray-300'}`}>
+                            {/* Active indicator - left border */}
+                            {isActive && (
+                                <div className="absolute left-0 top-2 bottom-2 w-[3px] bg-primary rounded-r-full" />
+                            )}
+                            <Icon size={20} strokeWidth={isActive ? 2.5 : 1.8} />
+                            <span className={`text-[9px] font-semibold uppercase tracking-wider mt-1 leading-tight text-center ${isActive ? 'text-white' : 'text-gray-500 group-hover:text-gray-300'}`}>
                                 {item.label}
                             </span>
+                            {item.badge !== undefined && (
+                                <span className={`text-[9px] mt-0.5 font-medium ${isActive ? 'text-gray-300' : 'text-gray-600'}`}>
+                                    {item.badge.toLocaleString()}
+                                </span>
+                            )}
                         </button>
                     );
                 })}
             </nav>
 
             {/* Sidebar Footer */}
-            {bottomAction && (
-                <div className="p-3 border-t border-gray-800/50">
-                    <button
-                        onClick={bottomAction.onClick}
-                        className="w-full flex flex-col items-center justify-center py-3 px-1 rounded-xl text-gray-400 hover:bg-gray-800/50 hover:text-white transition-all duration-200"
-                    >
-                        <bottomAction.icon size={20} className="mb-1" />
-                        <span className="text-[10px] font-bold uppercase tracking-wide text-gray-500 group-hover:text-gray-300">
-                            {bottomAction.label}
-                        </span>
-                    </button>
+            {bottomActions && bottomActions.length > 0 && (
+                <div className="flex flex-col items-center gap-4 py-4">
+                    {bottomActions.map((action, index) => (
+                        <button
+                            key={index}
+                            onClick={action.onClick}
+                            className="text-gray-500 hover:text-gray-300 transition-colors"
+                            title={action.label}
+                        >
+                            <action.icon size={18} />
+                        </button>
+                    ))}
                 </div>
             )}
         </aside>

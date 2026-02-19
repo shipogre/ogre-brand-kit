@@ -2,7 +2,7 @@ import React from 'react';
 
 export type ActionButtonVariant = 'approve' | 'file' | 'reject' | 'contact';
 
-export interface ActionButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+export interface ActionButtonProps extends React.HTMLAttributes<HTMLDivElement> {
     variant: ActionButtonVariant;
     children: React.ReactNode;
 }
@@ -21,12 +21,14 @@ export function ActionButton({
     ...props
 }: ActionButtonProps) {
     return (
-        <button
-            className={`w-full px-3 py-1.5 rounded text-xs font-semibold transition-colors duration-200 ${variantClasses[variant]} ${className}`}
+        <div
+            role="button"
+            tabIndex={0}
+            className={`w-full px-3 py-1.5 rounded-sm text-xs font-semibold transition-colors duration-200 cursor-pointer ${variantClasses[variant]} ${className}`}
             {...props}
         >
             {children}
-        </button>
+        </div>
     );
 }
 

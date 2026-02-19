@@ -11,3 +11,4 @@ export * from './ActionButton';
 export * from './Table';
 export * from './HeaderBar';
 export * from './Sidebar';
+export * from './Toggle';
