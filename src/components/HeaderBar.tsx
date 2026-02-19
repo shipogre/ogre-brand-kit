@@ -9,13 +9,15 @@ export interface HeaderBarProps {
     subtitle?: string;
     leftContent?: React.ReactNode;
     rightContent?: React.ReactNode;
+    belowContent?: React.ReactNode;
 }
 
 export const HeaderBar: React.FC<HeaderBarProps> = ({
     title,
     subtitle,
     leftContent,
-    rightContent
+    rightContent,
+    belowContent
 }) => {
     return (
         <nav className="bg-white dark:bg-bg-secondary border-b border-gray-200 dark:border-sidebar-border sticky top-0 z-50 transition-colors duration-300">
@@ -51,6 +53,11 @@ export const HeaderBar: React.FC<HeaderBarProps> = ({
                         {rightContent}
                     </div>
                 </div>
+                {belowContent && (
+                    <div className="mt-3 border-t border-gray-200 dark:border-sidebar-border pt-3">
+                        {belowContent}
+                    </div>
+                )}
             </div>
         </nav>
     );
