@@ -3,11 +3,11 @@ import React from 'react';
 export type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'dark';
 export type ButtonSize = 'sm' | 'md' | 'lg';
 
-export interface ButtonProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: ButtonVariant;
   size?: ButtonSize;
   isLoading?: boolean;
-  disabled?: boolean;
+  icon?: React.ReactNode;
   children: React.ReactNode;
 }
 
@@ -28,9 +28,11 @@ export function Button({
   variant = 'primary',
   size = 'md',
   isLoading = false,
+  icon,
   disabled,
   className = '',
   children,
+  type = 'button',
   ...props
 }: ButtonProps) {
   const classes = [
@@ -45,9 +47,9 @@ export function Button({
     .join(' ');
 
   return (
-    <div
-      role="button"
-      tabIndex={disabled || isLoading ? -1 : 0}
+    <button
+      type={type}
+      disabled={disabled || isLoading}
       className={classes}
       {...props}
     >
@@ -57,9 +59,12 @@ export function Button({
           Loading...
         </>
       ) : (
-        children
+        <>
+          {icon}
+          {children}
+        </>
       )}
-    </div>
+    </button>
   );
 }
 
