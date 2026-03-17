@@ -7,7 +7,7 @@ export * from './Select';
 export * from './Spinner';
 export * from './SearchInput';
 export * from './FilterBadge';
-export * from './ActionButton';
+
 export * from './Table';
 export * from './HeaderBar';
 export * from './Sidebar';
