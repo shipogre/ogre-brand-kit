@@ -9,19 +9,21 @@
 
 @theme {
   /* Brand colors (Light Mode Defaults) */
-  --color-primary: #800020;
-  --color-primary-hover: #5e0017;
-  --color-primary-active: #4a0012;
-  --color-primary-light: #a64d63;
+  --color-primary: #7F1D1D;
+  --color-primary-hover: #991B1B;
+  --color-primary-active: #450a0a;
+  --color-primary-light: #fef2f2;
 
-  --color-secondary: #1a1a1a;
+  --color-secondary: #111827;
   --color-secondary-hover: #000000;
-  --color-secondary-active: #333333;
+  --color-secondary-active: #374151;
+
+  --color-accent: #1E3A8A;
 
   /* Text colors */
   --color-text-primary: #111827;
-  --color-text-secondary: #4b5563;
-  --color-text-muted: #9ca3af;
+  --color-text-secondary: #374151;
+  --color-text-muted: #6B7280;
   --color-text-inverted: #ffffff;
 
   /* Background colors */
@@ -36,8 +38,9 @@
   --color-border-dark: #d1d5db;
 
   /* Sidebar colors */
-  --color-sidebar-bg: #f8fafc;
-  --color-sidebar-border: #e2e8f0;
+  --color-sidebar-bg: #1E293B;
+  --color-sidebar-border: #334155;
+  --color-sidebar-hover: #334155;
 
   /* Status colors */
   --color-success: #059669;
@@ -69,31 +72,34 @@
 
 /* Dark mode variable overrides */
 .dark {
-  --color-primary: #9f1239;
-  --color-primary-hover: #881337;
-  --color-primary-active: #be123c;
-  --color-primary-light: #4c0519;
+  --color-primary: #991B1B;
+  --color-primary-hover: #B91C1C;
+  --color-primary-active: #7F1D1D;
+  --color-primary-light: #450a0a;
 
   --color-secondary: #ffffff;
   --color-secondary-hover: #e5e5e5;
   --color-secondary-active: #d4d4d4;
+
+  --color-accent: #3B82F6;
 
   --color-text-primary: #f9fafb;
   --color-text-secondary: #d1d5db;
   --color-text-muted: #9ca3af;
   --color-text-inverted: #111827;
 
-  --color-bg-primary: #0f0808;
-  --color-bg-secondary: #1a0f0f;
-  --color-bg-tertiary: #2d1a1a;
-  --color-bg-hover: #1a0f0f;
+  --color-bg-primary: #0f172a;
+  --color-bg-secondary: #1e293b;
+  --color-bg-tertiary: #334155;
+  --color-bg-hover: #1e293b;
 
-  --color-border: #3d2020;
-  --color-border-light: #2d1a1a;
-  --color-border-dark: #4d2828;
+  --color-border: #334155;
+  --color-border-light: #1e293b;
+  --color-border-dark: #475569;
 
-  --color-sidebar-bg: #0a0505;
-  --color-sidebar-border: #2d1a1a;
+  --color-sidebar-bg: #0f172a;
+  --color-sidebar-border: #1e293b;
+  --color-sidebar-hover: #334155;
 
   --color-success: #34d399;
   --color-success-bg: rgba(52, 211, 153, 0.1);
@@ -104,7 +110,6 @@
   --color-info: #60a5fa;
   --color-info-bg: rgba(96, 165, 250, 0.1);
 
-  /* Adjust shadows for dark mode if needed, usually lighter opacity on dark background or just rely on borders */
   --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
   --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
 }

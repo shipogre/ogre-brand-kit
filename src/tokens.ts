@@ -7,20 +7,23 @@
 
 export const colors = {
   primary: {
-    DEFAULT: '#800020', // Deep Burgundy - more premium than previous #6C3333
-    hover: '#5e0017',
-    active: '#4a0012',
-    light: '#a64d63', // For backgrounds/accents
+    DEFAULT: '#7F1D1D', // OGRE Dark Red (red-900)
+    hover: '#991B1B',   // Slightly lighter on hover (red-800)
+    active: '#450a0a',  // Deeper on active
+    light: '#fef2f2',   // Red-50 for backgrounds/accents
   },
   secondary: {
-    DEFAULT: '#1a1a1a',
+    DEFAULT: '#111827', // Gray-900
     hover: '#000000',
-    active: '#333333',
+    active: '#374151',
+  },
+  accent: {
+    DEFAULT: '#1E3A8A', // Blue-800 - secondary accent
   },
   text: {
-    primary: '#111827', // Gray-900 instead of black
-    secondary: '#4b5563', // Gray-600
-    muted: '#9ca3af', // Gray-400
+    primary: '#111827', // Gray-900
+    secondary: '#374151', // Gray-700
+    muted: '#6B7280', // Gray-500
     inverted: '#ffffff',
   },
   bg: {
@@ -35,8 +38,9 @@ export const colors = {
     dark: '#d1d5db',
   },
   sidebar: {
-    bg: '#f8fafc', // Slate-50 - subtle contrast
-    border: '#e2e8f0', // Slate-200
+    bg: '#1E293B', // Slate-800 - dark sidebar
+    border: '#334155', // Slate-700
+    hover: '#334155', // Slate-700
   },
   status: {
     success: '#059669', // Emerald-600
@@ -130,10 +134,10 @@ export const fontSize = {
 // Dark mode colors
 export const darkColors = {
   primary: {
-    DEFAULT: '#9f1239', // Rose-800/900 mix
-    hover: '#881337',
-    active: '#be123c',
-    light: '#4c0519',
+    DEFAULT: '#991B1B', // Red-800
+    hover: '#B91C1C',   // Red-700
+    active: '#7F1D1D',  // Red-900
+    light: '#450a0a',   // Red-950 for dark mode backgrounds
   },
   secondary: {
     DEFAULT: '#ffffff',
@@ -147,19 +151,20 @@ export const darkColors = {
     inverted: '#111827',
   },
   bg: {
-    primary: '#0f0808', // Very dark maroon-tinted black
-    secondary: '#1a0f0f', // Dark maroon-tinted gray
-    tertiary: '#2d1a1a', // Darker maroon-tinted gray
-    hover: '#1a0f0f',
+    primary: '#0f172a', // Slate-900
+    secondary: '#1e293b', // Slate-800
+    tertiary: '#334155', // Slate-700
+    hover: '#1e293b',
   },
   border: {
-    DEFAULT: '#3d2020', // Maroon-tinted border
-    light: '#2d1a1a',
-    dark: '#4d2828',
+    DEFAULT: '#334155', // Slate-700
+    light: '#1e293b',
+    dark: '#475569',   // Slate-600
   },
   sidebar: {
-    bg: '#0a0505', // Deepest maroon-tinted black
-    border: '#2d1a1a',
+    bg: '#0f172a', // Slate-900
+    border: '#1e293b',
+    hover: '#334155',
   },
   status: {
     success: '#34d399',

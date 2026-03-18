@@ -53,7 +53,7 @@ export const ogreComponentsPlugin = {
       },
       '.btn:focus': {
         outline: 'none',
-        boxShadow: `0 0 0 2px ${colors.bg.primary}, 0 0 0 4px rgba(108, 51, 51, 0.2)`,
+        boxShadow: `0 0 0 2px ${colors.bg.primary}, 0 0 0 4px rgba(127, 29, 29, 0.2)`,
       },
       '.btn:disabled': {
         opacity: '0.5',
@@ -140,7 +140,7 @@ export const ogreComponentsPlugin = {
       '.form-input:focus, .form-select:focus': {
         outline: 'none',
         borderColor: colors.primary.DEFAULT,
-        boxShadow: '0 0 0 3px rgba(108, 51, 51, 0.1)',
+        boxShadow: '0 0 0 3px rgba(127, 29, 29, 0.1)',
       },
       '.form-input::placeholder': {
         color: colors.text.muted,
