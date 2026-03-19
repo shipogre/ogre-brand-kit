@@ -17,12 +17,20 @@ Create or update `.npmrc` in your project root:
 
 ### 2. Set up authentication
 
-Create a GitHub Personal Access Token (classic) with `read:packages` scope and add to your shell profile:
+1. Create a GitHub Personal Access Token (classic):
+   - Navigate to **GitHub → Settings → Developer settings → Personal access tokens → Tokens (classic)**
+   - Click **"Generate new token (classic)"**
+   - Select scopes: `read:packages` (for installing) or `read:packages` + `write:packages` (for publishing)
+   - Copy the token immediately — it won't be shown again
+
+2. Create an environment variable named `GITHUB_PACKAGES_TOKEN` that stores your personal access token:
 
 ```bash
 # Add to ~/.zshrc
-export GITHUB_PACKAGES_TOKEN=ghp_xxxxxxxxxxxx
+export GITHUB_PACKAGES_TOKEN="ghp_xxxxxxxxxxxx"
 ```
+
+*You will need to restart your CLI session or IDE after editing your `~/.zshrc` file.*
 
 ### 3. Install
 
