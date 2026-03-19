@@ -1,0 +1,108 @@
+name: Publish ogre-brand-kit npm Package
+
+on:
+  push:
+    tags:
+      - 'ogre-brand-kit-v*'
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Package version to publish (e.g., 1.0.1)'
+        required: true
+        default: '1.0.0'
+        type: string
+      release_notes:
+        description: 'Package release notes describing changes in this version'
+        required: false
+        default: 'Package update with latest changes'
+        type: string
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      packages: write
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '24'
+        registry-url: 'https://npm.pkg.github.com'
+        scope: '@shipogre'
+
+    - name: Determine version
+      id: version
+      run: |
+        if [[ "${{ github.event_name }}" == "push" && "${{ github.ref }}" == refs/tags/ogre-brand-kit-v* ]]; then
+          VERSION="${{ github.ref_name }}"
+          VERSION="${VERSION#ogre-brand-kit-v}"
+        else
+          VERSION="${{ github.event.inputs.version }}"
+        fi
+        echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
+        echo "Using version: $VERSION"
+
+    - name: Set package version
+      run: npm version ${{ steps.version.outputs.VERSION }} --no-git-tag-version --allow-same-version
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Build
+      run: npm run build
+
+    - name: Publish to GitHub Packages
+      run: npm publish
+      env:
+        NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Create tarball for artifact
+      run: npm pack
+
+    - name: Create release
+      if: github.event_name == 'push'
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ github.ref }}
+        release_name: "ogre-brand-kit v${{ steps.version.outputs.VERSION }}"
+        body: |
+          ## ogre-brand-kit npm Package Release v${{ steps.version.outputs.VERSION }}
+
+          ### Release Notes
+          ${{ github.event.inputs.release_notes || 'Package update with latest changes' }}
+
+          ### What's Included
+          - Design tokens (colors, shadows, spacing, typography)
+          - Tailwind CSS preset and component plugin
+          - React components (Button, Card, Input, Select, Table, etc.)
+          - CSS styles (theme, base, components)
+
+          ### Installation
+          ```bash
+          npm install @shipogre/ogre-brand-kit
+          ```
+
+          ### Dependencies
+          - Node.js 24+
+          - React 18/19
+          - Tailwind CSS 4+
+
+          This package is published to GitHub Packages and inherits repository access permissions.
+        draft: false
+        prerelease: false
+
+    - name: Upload package artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: npm-package-v${{ steps.version.outputs.VERSION }}
+        path: "*.tgz"
+        retention-days: 90
