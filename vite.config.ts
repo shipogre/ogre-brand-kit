@@ -38,7 +38,7 @@ export default defineConfig(({ command, mode }) => {
         formats: ['es', 'cjs'],
       },
       rollupOptions: {
-        external: ['react', 'react-dom', 'react/jsx-runtime', 'react-router-dom', 'tailwindcss'],
+        external: ['react', 'react-dom', 'react/jsx-runtime', 'react-router-dom', 'tailwindcss', 'lucide-react'],
         output: {
           preserveModules: false,
           exports: 'named',

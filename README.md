@@ -4,8 +4,30 @@ A comprehensive design system for OGRE applications, built with Tailwind CSS and
 
 ## Installation
 
+This package is published to GitHub Packages as `@shipogre/ogre-brand-kit`.
+
+### 1. Configure npm for GitHub Packages
+
+Create or update `.npmrc` in your project root:
+
+```
+@shipogre:registry=https://npm.pkg.github.com
+//npm.pkg.github.com/:_authToken=${GITHUB_PACKAGES_TOKEN}
+```
+
+### 2. Set up authentication
+
+Create a GitHub Personal Access Token (classic) with `read:packages` scope and add to your shell profile:
+
 ```bash
-npm install ogre-brand-kit
+# Add to ~/.zshrc
+export GITHUB_PACKAGES_TOKEN=ghp_xxxxxxxxxxxx
+```
+
+### 3. Install
+
+```bash
+npm install @shipogre/ogre-brand-kit
 ```
 
 ## Features
@@ -17,47 +39,31 @@ npm install ogre-brand-kit
 
 ## Usage
 
-### 1. Tailwind Configuration
+### 1. Import Styles (Tailwind CSS 4)
 
-Add the OGRE preset to your `tailwind.config.ts`:
-
-```typescript
-import type { Config } from 'tailwindcss';
-import ogrePreset from 'ogre-brand-kit/preset';
-import { ogreComponentsPlugin } from 'ogre-brand-kit';
-
-export default {
-  presets: [ogrePreset],
-  plugins: [ogreComponentsPlugin],
-  content: [
-    './src/**/*.{js,ts,jsx,tsx}',
-    './node_modules/ogre-brand-kit/dist/**/*.js',
-  ],
-} satisfies Config;
-```
-
-### 2. Import Base Styles (Optional)
-
-If you need the CSS animations and base styles:
+In your main CSS file:
 
 ```css
-@import 'ogre-brand-kit/styles.css';
+@import "tailwindcss";
+@source "@shipogre/ogre-brand-kit";
+@import "@shipogre/ogre-brand-kit/styles/theme.css";
+@import "@shipogre/ogre-brand-kit/styles/base.css" layer(base);
+@import "@shipogre/ogre-brand-kit/styles/components.css" layer(components);
 ```
 
-### 3. Using Design Tokens
+### 2. Using Design Tokens
 
 ```typescript
-import { colors, shadows, radius } from 'ogre-brand-kit/tokens';
+import { colors, shadows, radius } from '@shipogre/ogre-brand-kit/tokens';
 
-// Use in your code
 const primaryColor = colors.primary.DEFAULT; // '#6C3333'
 const hoverShadow = shadows.md;
 ```
 
-### 4. Using React Components
+### 3. Using React Components
 
 ```tsx
-import { Button, Card, Input, Badge, Spinner } from 'ogre-brand-kit/components';
+import { Button, Card, Input, Badge, Spinner } from '@shipogre/ogre-brand-kit/components';
 
 function MyComponent() {
   return (
@@ -72,7 +78,7 @@ function MyComponent() {
 }
 ```
 
-### 5. Using CSS Classes
+### 4. Using CSS Classes
 
 The component plugin adds these utility classes:
 
@@ -148,7 +154,7 @@ The component plugin adds these utility classes:
 ### Button
 
 ```tsx
-import { Button } from 'ogre-brand-kit/components';
+import { Button } from '@shipogre/ogre-brand-kit/components';
 
 <Button variant="primary" size="md" isLoading={false}>
   Click Me
@@ -163,7 +169,7 @@ Props:
 ### Card
 
 ```tsx
-import { Card, CardHeader, CardTitle, CardFooter } from 'ogre-brand-kit/components';
+import { Card, CardHeader, CardTitle, CardFooter } from '@shipogre/ogre-brand-kit/components';
 
 <Card>
   <CardHeader>
@@ -177,7 +183,7 @@ import { Card, CardHeader, CardTitle, CardFooter } from 'ogre-brand-kit/componen
 ### Input
 
 ```tsx
-import { Input } from 'ogre-brand-kit/components';
+import { Input } from '@shipogre/ogre-brand-kit/components';
 
 <Input
   label="Email"
@@ -190,7 +196,7 @@ import { Input } from 'ogre-brand-kit/components';
 ### Select
 
 ```tsx
-import { Select } from 'ogre-brand-kit/components';
+import { Select } from '@shipogre/ogre-brand-kit/components';
 
 <Select
   label="Country"
@@ -206,7 +212,7 @@ import { Select } from 'ogre-brand-kit/components';
 ### Badge
 
 ```tsx
-import { Badge } from 'ogre-brand-kit/components';
+import { Badge } from '@shipogre/ogre-brand-kit/components';
 
 <Badge status="active">Active</Badge>
 <Badge status="pending">Pending</Badge>
@@ -218,7 +224,7 @@ import { Badge } from 'ogre-brand-kit/components';
 ### Spinner
 
 ```tsx
-import { Spinner } from 'ogre-brand-kit/components';
+import { Spinner } from '@shipogre/ogre-brand-kit/components';
 
 <Spinner size="sm" />
 <Spinner size="md" />
@@ -228,10 +234,38 @@ import { Spinner } from 'ogre-brand-kit/components';
 ### ProgressBar
 
 ```tsx
-import { ProgressBar } from 'ogre-brand-kit/components';
+import { ProgressBar } from '@shipogre/ogre-brand-kit/components';
 
 <ProgressBar value={75} max={100} showLabel />
 ```
+
+## Publishing
+
+### Automated (CI)
+
+Push a tag matching `ogre-brand-kit-v*` to trigger the GitHub Actions publish workflow:
+
+```bash
+git tag ogre-brand-kit-v1.0.0
+git push origin ogre-brand-kit-v1.0.0
+```
+
+Or trigger manually from the Actions tab with version and release notes inputs.
+
+### Local Publishing
+
+```bash
+# List existing versions
+./scripts/manage-npm-package/publish-github.zsh --list-versions
+
+# Publish a specific version
+./scripts/manage-npm-package/publish-github.zsh --version 1.0.0
+
+# Quick alpha publish
+./scripts/manage-npm-package/publish-github.zsh --alpha
+```
+
+Requires `GITHUB_PACKAGES_TOKEN` with `write:packages` scope.
 
 ## Development
 
