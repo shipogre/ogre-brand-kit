@@ -69,6 +69,21 @@
     @apply border-border-dark;
   }
 
+  .form-input[type="date"] {
+    @apply relative;
+  }
+
+  .form-input[type="date"]::-webkit-calendar-picker-indicator {
+    position: absolute;
+    right: 0.75rem;
+    cursor: pointer;
+    opacity: 0.5;
+  }
+
+  .form-input[type="date"]::-webkit-calendar-picker-indicator:hover {
+    opacity: 1;
+  }
+
   /* Badges */
   .status-badge {
     @apply inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2;
