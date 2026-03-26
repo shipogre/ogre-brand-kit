@@ -50,6 +50,8 @@ export interface TableProps<T = Record<string, unknown>> {
     onFilter?: (filterKey: string, values: string[]) => void;
     /** Map of filterKey → currently active filter values. */
     activeFilters?: Record<string, string[]>;
+    /** Optional callback to add custom class names to table rows. */
+    rowClassName?: (row: T) => string;
 }
 
 function SortIndicator({ direction, active }: { direction?: SortDirection; active: boolean }) {
@@ -172,6 +174,7 @@ export function Table<T extends Record<string, unknown>>({
     activeSortDirection,
     onFilter,
     activeFilters = {},
+    rowClassName,
 }: TableProps<T>) {
     const scrollContainerRef = useRef<HTMLDivElement>(null);
     const sentinelRef = useRef<HTMLDivElement>(null);
@@ -282,7 +285,7 @@ export function Table<T extends Record<string, unknown>>({
                                 <tr
                                     key={rowIndex}
                                     onClick={() => onRowClick?.(row)}
-                                    className={`hover:bg-bg-hover/50 dark:hover:bg-bg-hover/20 transition-colors ${onRowClick ? 'cursor-pointer' : ''}`}
+                                    className={`hover:bg-bg-hover/50 dark:hover:bg-bg-hover/20 transition-colors ${onRowClick ? 'cursor-pointer' : ''} ${rowClassName?.(row) || ''}`}
                                 >
                                     {columns.map((column) => (
                                         <td
