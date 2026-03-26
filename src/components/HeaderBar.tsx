@@ -9,6 +9,7 @@ export interface HeaderBarProps {
     title?: string;
     subtitle?: string;
     leftContent?: React.ReactNode;
+    centerContent?: React.ReactNode;
     rightContent?: React.ReactNode;
     belowContent?: React.ReactNode;
 }
@@ -17,6 +18,7 @@ export const HeaderBar: React.FC<HeaderBarProps> = ({
     title,
     subtitle,
     leftContent,
+    centerContent,
     rightContent,
     belowContent
 }) => {
@@ -34,13 +36,15 @@ export const HeaderBar: React.FC<HeaderBarProps> = ({
                         </div>
                     )}
 
-                    {/* Center: Search Bar */}
-                    <div className="flex-1 max-w-md mx-8">
-                        <SearchInput
-                            placeholder="Search Companies/Locations..."
-                            className="bg-gray-50 dark:bg-gray-800 border-gray-200 dark:border-gray-700"
-                        />
-                    </div>
+                    {/* Center: Search Bar or custom content */}
+                    {centerContent ?? (
+                        <div className="flex-1 max-w-md mx-8">
+                            <SearchInput
+                                placeholder="Search Companies/Locations..."
+                                className="bg-gray-50 dark:bg-gray-800 border-gray-200 dark:border-gray-700"
+                            />
+                        </div>
+                    )}
 
                     {/* Right: OGRE branding + user menu */}
                     <div className="flex items-center gap-4">
