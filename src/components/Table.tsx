@@ -10,7 +10,7 @@ export interface FilterOption {
 
 export interface TableColumn<T = Record<string, unknown>> {
     key: string;
-    header: string;
+    header: React.ReactNode;
     render?: (row: T) => React.ReactNode;
     className?: string;
     headerClassName?: string;
