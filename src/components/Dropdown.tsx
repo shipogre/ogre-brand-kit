@@ -22,6 +22,20 @@ export interface DropdownProps {
     searchThreshold?: number;
     /** Placeholder text for the search input */
     searchPlaceholder?: string;
+    /**
+     * Force the search input to render regardless of item count. Useful when
+     * the consumer drives results from the server via {@link onSearchChange} —
+     * the items list may be small (or empty) but typing still needs to work.
+     */
+    forceShowSearch?: boolean;
+    /**
+     * When set, the dropdown emits each keystroke in the search input instead
+     * of filtering items locally. Consumers use this to fetch matches from a
+     * backend and update `items` themselves. Debouncing is the caller's job.
+     */
+    onSearchChange?: (query: string) => void;
+    /** Optional loading state shown in place of the items while a backend search is in flight. */
+    loading?: boolean;
 }
 
 export const Dropdown: React.FC<DropdownProps> = ({
@@ -32,13 +46,17 @@ export const Dropdown: React.FC<DropdownProps> = ({
     className = '',
     searchThreshold = 10,
     searchPlaceholder = 'Search...',
+    forceShowSearch = false,
+    onSearchChange,
+    loading = false,
 }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
     const dropdownRef = useRef<HTMLDivElement>(null);
     const searchInputRef = useRef<HTMLInputElement>(null);
 
-    const showSearch = items.length > searchThreshold;
+    const serverDriven = typeof onSearchChange === 'function';
+    const showSearch = forceShowSearch || serverDriven || items.length > searchThreshold;
 
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
@@ -64,13 +82,18 @@ export const Dropdown: React.FC<DropdownProps> = ({
         }
     }, [isOpen, showSearch]);
 
-    const filteredItems = searchQuery
-        ? items.filter(item =>
-            item.id === '__clear' ||
-            item.label.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            item.description?.toLowerCase().includes(searchQuery.toLowerCase())
-        )
-        : items;
+    // When the parent drives the search (server-side), don't double-filter
+    // locally — the items list already reflects the typed query (minus debounce
+    // lag). Local filtering on top would hide perfectly-good server matches.
+    const filteredItems = serverDriven
+        ? items
+        : searchQuery
+            ? items.filter(item =>
+                item.id === '__clear' ||
+                item.label.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                item.description?.toLowerCase().includes(searchQuery.toLowerCase())
+            )
+            : items;
 
     return (
         <div className={`relative ${className}`} ref={dropdownRef}>
@@ -88,7 +111,10 @@ export const Dropdown: React.FC<DropdownProps> = ({
                                     ref={searchInputRef}
                                     type="text"
                                     value={searchQuery}
-                                    onChange={(e) => setSearchQuery(e.target.value)}
+                                    onChange={(e) => {
+                                        setSearchQuery(e.target.value);
+                                        onSearchChange?.(e.target.value);
+                                    }}
                                     placeholder={searchPlaceholder}
                                     className="w-full pl-8 pr-3 py-1.5 text-sm bg-bg-secondary dark:bg-bg-hover rounded border-none outline-none text-text-primary placeholder:text-text-muted"
                                 />
@@ -96,7 +122,10 @@ export const Dropdown: React.FC<DropdownProps> = ({
                         </div>
                     )}
                     <div className={showSearch ? 'max-h-60 overflow-y-auto' : ''}>
-                        {filteredItems.map((item, index) => (
+                        {loading && (
+                            <div className="px-4 py-3 text-sm text-text-muted text-center">Searching…</div>
+                        )}
+                        {!loading && filteredItems.map((item, index) => (
                             <React.Fragment key={item.id}>
                                 {item.separator && index > 0 && (
                                     <div className="border-t border-border dark:border-border-light my-1" />
@@ -125,7 +154,7 @@ export const Dropdown: React.FC<DropdownProps> = ({
                                 </div>
                             </React.Fragment>
                         ))}
-                        {filteredItems.length === 0 && (
+                        {!loading && filteredItems.length === 0 && (
                             <div className="px-4 py-3 text-sm text-text-muted text-center">No matches found</div>
                         )}
                     </div>
