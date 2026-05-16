@@ -14,3 +14,4 @@ export * from './Sidebar';
 export * from './Toggle';
 export * from './Dropdown';
 export * from './SelectableRow';
+export * from './ActionModal';
