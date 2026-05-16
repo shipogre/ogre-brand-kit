@@ -22,9 +22,15 @@ export interface SidebarProps {
     items: NavItem[];
     bottomActions?: BottomAction[];
     headerContent?: React.ReactNode;
+    /**
+     * Optional content rendered below the bottom action icons. Use this for
+     * persistently-visible footer text (e.g. an app version label) that does
+     * not fit the icon-only `bottomActions` shape.
+     */
+    footerContent?: React.ReactNode;
 }
 
-export const Sidebar: React.FC<SidebarProps> = ({ activeItem = 'dashboard', items, bottomActions, headerContent }) => {
+export const Sidebar: React.FC<SidebarProps> = ({ activeItem = 'dashboard', items, bottomActions, headerContent, footerContent }) => {
     const navigate = useNavigate();
 
     const handleItemClick = (item: NavItem) => {
@@ -83,9 +89,9 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeItem = 'dashboard', item
             </nav>
 
             {/* Sidebar Footer */}
-            {bottomActions && bottomActions.length > 0 && (
+            {(bottomActions && bottomActions.length > 0) || footerContent ? (
                 <div className="flex flex-col items-center gap-4 py-4">
-                    {bottomActions.map((action, index) => (
+                    {bottomActions?.map((action, index) => (
                         <button
                             key={index}
                             onClick={action.onClick}
@@ -95,8 +101,9 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeItem = 'dashboard', item
                             <action.icon size={18} />
                         </button>
                     ))}
+                    {footerContent}
                 </div>
-            )}
+            ) : null}
         </aside>
     );
 };
