@@ -36,6 +36,14 @@ export interface DropdownProps {
     onSearchChange?: (query: string) => void;
     /** Optional loading state shown in place of the items while a backend search is in flight. */
     loading?: boolean;
+    /**
+     * Fires whenever the dropdown's open state changes (opened or closed —
+     * outside-click, item-pick, or trigger toggle). Consumers driving
+     * server-side search via {@link onSearchChange} use this to reset their
+     * locally-held query / results when the dropdown closes, so a re-open
+     * starts fresh.
+     */
+    onOpenChange?: (isOpen: boolean) => void;
 }
 
 export const Dropdown: React.FC<DropdownProps> = ({
@@ -49,11 +57,25 @@ export const Dropdown: React.FC<DropdownProps> = ({
     forceShowSearch = false,
     onSearchChange,
     loading = false,
+    onOpenChange,
 }) => {
-    const [isOpen, setIsOpen] = useState(false);
+    const [isOpen, setIsOpenRaw] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
     const dropdownRef = useRef<HTMLDivElement>(null);
     const searchInputRef = useRef<HTMLInputElement>(null);
+
+    // Wrap setIsOpen so we always notify the consumer of open/close
+    // transitions — that's how the consumer drops stale server-search state
+    // when the dropdown closes.
+    const onOpenChangeRef = useRef(onOpenChange);
+    onOpenChangeRef.current = onOpenChange;
+    const setIsOpen = (next: boolean | ((prev: boolean) => boolean)) => {
+        setIsOpenRaw((prev) => {
+            const resolved = typeof next === 'function' ? next(prev) : next;
+            if (resolved !== prev) onOpenChangeRef.current?.(resolved);
+            return resolved;
+        });
+    };
 
     const serverDriven = typeof onSearchChange === 'function';
     const showSearch = forceShowSearch || serverDriven || items.length > searchThreshold;
