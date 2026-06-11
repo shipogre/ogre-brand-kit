@@ -48,7 +48,10 @@ export const HeaderBar: React.FC<HeaderBarProps> = ({
 
                     {/* Right: OGRE branding + user menu */}
                     <div className="flex items-center gap-4">
-                        <Link to="/" className="block cursor-pointer transition-opacity hover:opacity-90">
+                        {/* In dark mode the logo's dark "SHIP LIKE A BEAST" text loses contrast
+                         * against the dark body. Wrapping in a subtle lighter frame keeps the
+                         * mark legible without needing a separate dark-mode asset. */}
+                        <Link to="/" className="block cursor-pointer transition-opacity hover:opacity-90 dark:bg-bg-tertiary dark:px-2 dark:py-1 dark:rounded-md">
                             <img
                                 src={ogreLogo}
                                 alt="OGRE - Ship Like A Beast"

@@ -48,7 +48,7 @@ export function SearchInput({
       <input
         ref={inputRef}
         type="text"
-        className={`w-full pl-10 pr-9 py-2.5 border border-border dark:border-border-light rounded-lg bg-white dark:bg-bg-secondary focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all text-sm placeholder:text-text-muted ${className}`}
+        className={`w-full pl-10 pr-9 py-2.5 border border-border rounded-lg bg-bg-primary focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all text-sm placeholder:text-text-muted ${className}`}
         placeholder={placeholder}
         onChange={handleChange}
         value={value}
