@@ -118,7 +118,7 @@ function FilterDropdown({
                 </svg>
             </button>
             {open && (
-                <div className="absolute top-full left-0 mt-1 bg-white dark:bg-bg-secondary border border-border dark:border-border-light rounded-lg shadow-lg z-50 min-w-[160px] py-1">
+                <div className="absolute top-full left-0 mt-1 bg-bg-primary border border-border rounded-lg shadow-lg z-50 min-w-[160px] py-1">
                     {hasActive && (
                         <button
                             onClick={() => onFilter([])}
@@ -138,7 +138,7 @@ function FilterDropdown({
                                 }`}
                             >
                                 <span className={`w-3.5 h-3.5 rounded border flex items-center justify-center ${
-                                    isSelected ? 'bg-primary border-primary' : 'border-border dark:border-border-light'
+                                    isSelected ? 'bg-primary border-primary' : 'border-border'
                                 }`}>
                                     {isSelected && (
                                         <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round">
@@ -229,7 +229,7 @@ export function Table<T extends Record<string, unknown>>({
     };
 
     return (
-        <div className={`bg-white dark:bg-bg-secondary rounded-lg border border-border dark:border-border-light shadow-sm overflow-hidden ${className}`}>
+        <div className={`bg-bg-primary rounded-lg border border-border shadow-sm overflow-hidden ${className}`}>
             {title && (
                 <div className="px-6 py-4 bg-primary flex justify-between items-center">
                     <h2 className="text-base font-bold text-white uppercase tracking-wide">{title}</h2>
@@ -244,7 +244,7 @@ export function Table<T extends Record<string, unknown>>({
                     style={{ maxHeight }}
                 >
                     <table className="w-full text-left border-collapse">
-                        <thead className={`bg-gray-50 dark:bg-bg-hover ${stickyHeader ? 'sticky top-0 z-10' : ''}`}>
+                        <thead className={`bg-bg-secondary ${stickyHeader ? 'sticky top-0 z-10' : ''}`}>
                             <tr>
                                 {columns.map((column) => {
                                     const isSortable = !!column.sortKey && !!onSort;
@@ -255,7 +255,7 @@ export function Table<T extends Record<string, unknown>>({
                                         <th
                                             key={column.key}
                                             onClick={isSortable ? () => handleHeaderClick(column) : undefined}
-                                            className={`px-4 py-3 text-xs font-bold uppercase tracking-wider text-text-muted border-b border-border dark:border-border-light ${
+                                            className={`px-4 py-3 text-xs font-bold uppercase tracking-wider text-text-muted border-b border-border ${
                                                 isSortable ? 'cursor-pointer select-none hover:text-text-primary transition-colors' : ''
                                             } ${column.headerClassName || ''}`}
                                         >
@@ -280,7 +280,7 @@ export function Table<T extends Record<string, unknown>>({
                                 })}
                             </tr>
                         </thead>
-                        <tbody className="divide-y divide-border/50 dark:divide-border-light/10">
+                        <tbody className="divide-y divide-border/50">
                             {data.map((row, rowIndex) => (
                                 <tr
                                     key={rowIndex}

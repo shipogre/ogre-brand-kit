@@ -94,7 +94,11 @@
   --color-bg-hover: #1e293b;
 
   --color-border: #334155;
-  --color-border-light: #1e293b;
+  /* In dark mode, --color-border-light must be visibly distinct from --color-bg-secondary
+   * (the page body color, #1e293b). A token that resolves to the same value as the body
+   * makes every `border-border-light` invisible. Use a subtle shade between body and the
+   * main border instead so "softer border" still reads as a border. */
+  --color-border-light: #2a3447;
   --color-border-dark: #475569;
 
   --color-sidebar-bg: #0f172a;
