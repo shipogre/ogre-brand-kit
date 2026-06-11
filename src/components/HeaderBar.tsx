@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { SearchInput } from './SearchInput';
 import ogreLogo from '../../assets/ogre_with_tag.png';
+import ogreLogoDark from '../../assets/ogre_with_tag_dark.png';
 
 export interface HeaderBarProps {
     isDarkMode: boolean;
@@ -48,14 +49,19 @@ export const HeaderBar: React.FC<HeaderBarProps> = ({
 
                     {/* Right: OGRE branding + user menu */}
                     <div className="flex items-center gap-4">
-                        {/* In dark mode the logo's dark "SHIP LIKE A BEAST" text loses contrast
-                         * against the dark body. Wrapping in a subtle lighter frame keeps the
-                         * mark legible without needing a separate dark-mode asset. */}
-                        <Link to="/" className="block cursor-pointer transition-opacity hover:opacity-90 dark:bg-bg-tertiary dark:px-2 dark:py-1 dark:rounded-md">
+                        {/* Light/dark variants of the brand mark — the dark variant has the
+                         * OGRE/SHIP LIKE A BEAST text re-rendered in white so it stays legible
+                         * on a dark body. The red square + ogre face is identical in both. */}
+                        <Link to="/" className="block cursor-pointer transition-opacity hover:opacity-90">
                             <img
                                 src={ogreLogo}
                                 alt="OGRE - Ship Like A Beast"
-                                className="h-12 w-auto object-contain"
+                                className="h-12 w-auto object-contain block dark:hidden"
+                            />
+                            <img
+                                src={ogreLogoDark}
+                                alt="OGRE - Ship Like A Beast"
+                                className="h-12 w-auto object-contain hidden dark:block"
                             />
                         </Link>
                         {rightContent}
