@@ -75,7 +75,10 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeItem = 'dashboard', item
                                 <div className="absolute left-0 top-2 bottom-2 w-[3px] bg-primary rounded-r-full" />
                             )}
                             <Icon size={20} strokeWidth={isActive ? 2.5 : 1.8} />
-                            <span className={`text-[9px] font-semibold uppercase tracking-wider mt-1 leading-tight text-center ${isActive ? 'text-white' : 'text-gray-500 group-hover:text-gray-300'}`}>
+                            {/* w-full + break-words keeps long labels (e.g. NOTIFICATIONS) inside the
+                             * sidebar width — without an explicit width the span lays out as inline
+                             * content and overflows past the sidebar edge. */}
+                            <span className={`w-full text-[9px] font-semibold uppercase tracking-wider mt-1 leading-tight text-center break-words ${isActive ? 'text-white' : 'text-gray-500 group-hover:text-gray-300'}`}>
                                 {item.label}
                             </span>
                             {item.badge !== undefined && (
